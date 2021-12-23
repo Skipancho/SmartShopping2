@@ -7,7 +7,7 @@ class App : Application() {
         super.onCreate()
         instance = this
     }
-    
+
     companion object{
         lateinit var instance : App
         const val API_HOST = "10.0.0.2"
