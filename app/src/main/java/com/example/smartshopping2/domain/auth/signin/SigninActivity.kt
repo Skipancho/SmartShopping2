@@ -7,9 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.smartshopping2.R
 import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.databinding.ActivitySigninBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import splitties.toast.toast
+import com.example.smartshopping2.domain.auth.signup.SignupActivity
+import splitties.activities.start
 import java.lang.ref.WeakReference
 
 class SigninActivity : AppCompatActivity(),SigninNavigator{
@@ -47,6 +46,6 @@ class SigninActivity : AppCompatActivity(),SigninNavigator{
     }
 
     override fun startSignUpActivity() {
-        TODO("Not yet implemented")
+        start<SignupActivity>()
     }
 }

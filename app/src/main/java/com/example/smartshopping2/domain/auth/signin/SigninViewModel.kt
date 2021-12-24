@@ -54,7 +54,9 @@ class SigninViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
-   private fun isNotValidateSignin(request: SigninRequest) =
+    fun startSignupActivity() = navigator?.startSignUpActivity()
+
+    private fun isNotValidateSignin(request: SigninRequest) =
         when{
             request.isNotValidUserId() -> {
                 toast("아이디를 확인해주세요.")

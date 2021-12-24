@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.28584474885844746" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_signin.xml" value="0.2710926694329184" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.25" />
       </map>
     </option>
   </component>
