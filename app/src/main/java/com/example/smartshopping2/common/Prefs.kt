@@ -9,6 +9,9 @@ object Prefs {
     private const val USER_NICKNAME = "user_nickname"
     private const val USER_CODE = "user_code"
 
+    private const val USER_ID = "user_id"
+    private const val USER_PW = "user_pw"
+
     val prefs by lazy {
         PreferenceManager.getDefaultSharedPreferences(App.instance)
     }
@@ -28,5 +31,13 @@ object Prefs {
     var userCode
         get() = prefs.getLong(USER_CODE, 0)
         set(value) = prefs.edit().putLong(USER_CODE,value).apply()
+
+    var userId
+        get() = prefs.getString(USER_ID, null)
+        set(value) = prefs.edit().putString(USER_ID,value).apply()
+
+    var password
+        get() = prefs.getString(USER_PW, null)
+        set(value) = prefs.edit().putString(USER_PW,value).apply()
 
 }
