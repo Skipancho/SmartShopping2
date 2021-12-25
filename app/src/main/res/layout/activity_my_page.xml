@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".domain.mypage.MyPageActivity">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.smartshopping2.domain.mypage.MyPageViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_baseline_account_circle_24"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.nickName, default = 닉네임 }"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.userCode , default = 아이디 }"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:padding="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="로그아웃"
+            android:onClick="@{(v) -> viewModel.signout()}"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            app:drawableStartCompat="@drawable/ic_baseline_directions_run_24" />
+
+    </LinearLayout>
+
+</layout>
