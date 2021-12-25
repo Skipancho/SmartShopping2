@@ -8,6 +8,7 @@ import com.example.smartshopping2.R
 import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.databinding.ActivitySigninBinding
 import com.example.smartshopping2.domain.auth.signup.SignupActivity
+import com.example.smartshopping2.domain.main.MainActivity
 import splitties.activities.start
 import java.lang.ref.WeakReference
 
@@ -42,7 +43,8 @@ class SigninActivity : AppCompatActivity(),SigninNavigator{
     }
 
     override fun startMainActivity() {
-        TODO("Not yet implemented")
+        start<MainActivity>()
+        finish()
     }
 
     override fun startSignUpActivity() {

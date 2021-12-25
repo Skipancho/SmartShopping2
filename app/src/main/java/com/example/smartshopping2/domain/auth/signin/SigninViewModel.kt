@@ -10,6 +10,7 @@ import com.example.smartshopping2.api.request.SigninRequest
 import com.example.smartshopping2.api.response.ApiResponse
 import com.example.smartshopping2.api.response.SigninResponse
 import com.example.smartshopping2.common.Prefs
+import com.example.smartshopping2.domain.auth.Auth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -76,10 +77,13 @@ class SigninViewModel(app : Application) : AndroidViewModel(app) {
 
     private fun onSigninResponse(response: ApiResponse<SigninResponse>){
         if (response.success && response.data != null){
-            Prefs.token = response.data.token
-            Prefs.refreshToken = response.data.refreshToken
-            Prefs.nickName = response.data.nickName
-            Prefs.userCode = response.data.userCode
+            val data = response.data
+            Auth.signin(
+                data.token,
+                data.refreshToken,
+                data.nickName,
+                data.userCode
+            )
 
             if (auto_signin.value == true){
                 Prefs.userId = userId.value
@@ -87,7 +91,7 @@ class SigninViewModel(app : Application) : AndroidViewModel(app) {
             }
 
             toast("로그인 성공")
-            //todo: start main activity
+            navigator?.startMainActivity()
         }
     }
 }
