@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navi_graph"
+    app:startDestination="@id/frag_product_main">
+    <fragment
+        android:id="@+id/frag_product_main"
+        android:name="com.example.smartshopping2.domain.product.ProductMainFragment"
+        tools:layout="@layout/fragment_product_main"/>
+    <fragment
+        android:id="@+id/frag_cart_list"
+        android:name="com.example.smartshopping2.domain.list.CartListFragment"
+        tools:layout="@layout/fragment_cart_list"/>
+    <fragment
+        android:id="@+id/frag_check_list"
+        android:name="com.example.smartshopping2.domain.list.CheckListFragment"
+        tools:layout="@layout/fragment_check_list"/>
+</navigation>

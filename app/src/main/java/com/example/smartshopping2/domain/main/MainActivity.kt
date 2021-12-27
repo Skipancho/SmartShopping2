@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.smartshopping2.R
 import com.example.smartshopping2.databinding.ActivityMainBinding
 import com.example.smartshopping2.domain.mypage.MyPageActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import splitties.activities.start
 import java.lang.ref.WeakReference
 
@@ -32,6 +35,12 @@ class MainActivity : AppCompatActivity() , MainNavigator{
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        initNavigation()
+    }
+
+    private fun initNavigation(){
+        NavigationUI.setupWithNavController(findViewById<BottomNavigationView>(R.id.bottom_nav),findNavController(R.id.nav_host))
     }
 
     override fun startMyPage() {

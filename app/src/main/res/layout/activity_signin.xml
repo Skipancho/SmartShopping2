@@ -51,6 +51,7 @@
             android:drawablePadding="5dp"
             android:padding="10dp"
             android:hint="비밀번호"
+            android:inputType="textWebPassword"
             android:singleLine="true"
             android:text="@={viewModel.password}"/>
 

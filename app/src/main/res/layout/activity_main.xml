@@ -31,18 +31,17 @@
                     android:text="mypage"
                     android:onClick="@{(v) -> viewModel.startMyPage()}"/>
             </RelativeLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:onClick="@{(v) -> viewModel.hello()}"/>
-
-            <TextView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@{viewModel.textdata}"/>
+                android:layout_height="match_parent">
+                <fragment
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nav_host"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    app:defaultNavHost = "true"
+                    app:navGraph="@navigation/navi_graph"/>
+            </FrameLayout>
         </LinearLayout>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
