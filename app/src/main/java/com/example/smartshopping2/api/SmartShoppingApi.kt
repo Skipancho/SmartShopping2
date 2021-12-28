@@ -3,11 +3,9 @@ package com.example.smartshopping2.api
 import com.example.smartshopping2.api.request.SigninRequest
 import com.example.smartshopping2.api.request.SignupRequest
 import com.example.smartshopping2.api.response.ApiResponse
+import com.example.smartshopping2.api.response.ProductResponse
 import com.example.smartshopping2.api.response.SigninResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface SmartShoppingApi {
 
@@ -25,6 +23,19 @@ interface SmartShoppingApi {
 
     @POST("/api/v1/users/nickname")
     suspend fun validateNickName(@Query("nickName") nickName : String) : ApiResponse<Void>
+
+    @GET("/api/v1/products")
+    suspend fun getProducts(
+        @Query("productId") productId : Long,
+        @Query("categoryId") categoryId : Int?,
+        @Query("direction") direction : String,
+        @Query("keyword") keyword : String? = null
+    ):ApiResponse<List<ProductResponse>>
+
+    @GET("api/v1/products/{id}")
+    suspend fun getProduct(
+        @Path("id") id : Long
+    ):ApiResponse<ProductResponse>
 
     companion object{
         val instance = ApiGenerator().generate(SmartShoppingApi::class.java)
