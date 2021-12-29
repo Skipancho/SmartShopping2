@@ -7,22 +7,25 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.smartshopping2.R
+import com.example.smartshopping2.api.SmartShoppingApi
 import com.example.smartshopping2.databinding.FragmentProductMainBinding
+import com.example.smartshopping2.domain.product.list.ProductListAdapter
+import com.example.smartshopping2.domain.product.list.ProductListPagedAdapter
+import kotlinx.coroutines.*
+import splitties.toast.toast
 import kotlin.IllegalStateException
 
 class ProductMainFragment : Fragment() {
-
-    val categoryId get() = arguments?.getInt("categoryId")
-        ?: throw IllegalStateException("categoryId 없음")
-
-    val title get() = arguments?.getString("title")
-        ?: throw IllegalStateException("title 없음")
 
     private val viewModel by lazy {
         ViewModelProvider(this)
             .get(ProductMainViewModel::class.java)
     }
+
+    private val adapter = ProductListAdapter(context)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,16 +38,20 @@ class ProductMainFragment : Fragment() {
 
         binding.viewModel = viewModel
 
+        binding.productsRcv.layoutManager = GridLayoutManager(context,2)
+        binding.productsRcv.adapter = adapter
+
+        loadProducts()
+
         return binding.root
     }
 
-    companion object{
-        fun newInstance(categoryId : Int, title : String) =
-            ProductMainFragment().apply {
-                arguments = Bundle().also {
-                    it.putInt("categoryId", categoryId)
-                    it.putString("title", title)
-                }
-            }
+    fun loadProducts() = GlobalScope.launch {
+        val response =
+            SmartShoppingApi.instance.getProducts(Long.MAX_VALUE,null,"next",null)
+
+        val products = response.data
     }
+
+
 }
