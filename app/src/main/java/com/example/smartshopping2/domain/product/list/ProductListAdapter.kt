@@ -6,20 +6,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.smartshopping2.App
 import com.example.smartshopping2.R
 import com.example.smartshopping2.api.response.ProductResponse
 import com.example.smartshopping2.databinding.ProductItemBinding
 
 class ProductListAdapter(
-    private val context: Context?) :
+    private val context: Context?,
+    private val products : List<ProductModel>
+    ) :
 RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
-
-    private val products = mutableListOf<ProductResponse>()
-
-    fun addProducts(products : List<ProductResponse>){
-        this.products.addAll(products)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -45,5 +42,9 @@ RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
 
         val binding = holder.binding as ProductItemBinding
         binding.product = product
+        Glide.with(binding.image)
+            .load("${App.API_HOST}${product.imagePaths.firstOrNull()}")
+            .centerCrop()
+            .into(binding.image)
     }
 }

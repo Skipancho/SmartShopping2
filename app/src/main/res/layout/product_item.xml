@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="product"
-            type="com.example.smartshopping2.api.response.ProductResponse" />
+            type="com.example.smartshopping2.domain.product.list.ProductModel" />
     </data>
     <LinearLayout
         android:layout_width="wrap_content"
