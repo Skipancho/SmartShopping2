@@ -1,6 +1,7 @@
 package com.example.smartshopping2.domain.product
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +15,19 @@ import com.example.smartshopping2.api.SmartShoppingApi
 import com.example.smartshopping2.databinding.FragmentProductMainBinding
 import com.example.smartshopping2.domain.product.list.ProductListAdapter
 import com.example.smartshopping2.domain.product.list.ProductModel
+import com.example.smartshopping2.domain.product.search.SearchActivity
 import kotlinx.coroutines.*
+import kotlinx.coroutines.NonCancellable.start
+import java.lang.ref.WeakReference
 import java.text.NumberFormat
 
-class ProductMainFragment : Fragment() {
+class ProductMainFragment : Fragment(), ProductMainNavigator{
 
     private val viewModel by lazy {
         ViewModelProvider(this)
-            .get(ProductMainViewModel::class.java)
+            .get(ProductMainViewModel::class.java).also {
+                it.navigatorRef = WeakReference(this)
+            }
     }
 
     private val products = ArrayList<ProductModel>()
@@ -43,13 +49,13 @@ class ProductMainFragment : Fragment() {
         binding.productsRcv.layoutManager = GridLayoutManager(activity,2)
         binding.productsRcv.adapter = adapter
 
-        loadImage()
+        loadProduct()
 
         return binding.root
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun loadImage() = GlobalScope.launch {
+    private fun loadProduct() = GlobalScope.launch {
         val response =
             SmartShoppingApi.instance.getProducts(Long.MAX_VALUE,null,"next",null)
 
@@ -79,5 +85,9 @@ class ProductMainFragment : Fragment() {
         }
     }
 
+    override fun startSearchActivity() {
+        val intent = Intent(activity,SearchActivity::class.java)
+        startActivity(intent)
+    }
 
 }
