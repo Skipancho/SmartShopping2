@@ -46,7 +46,7 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
     }
 
     override fun finishActivity() {
-        finishActivity()
+        finish()
     }
 
     @SuppressLint("NotifyDataSetChanged")
