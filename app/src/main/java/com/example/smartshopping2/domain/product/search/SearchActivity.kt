@@ -39,7 +39,7 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
     }
 
     private fun initRecyclerView(){
-        adapter = ProductListAdapter(this, viewModel.search_products)
+        adapter = ProductListAdapter(this, viewModel.search_products, viewModel)
 
         binding.searchTag.layoutManager = LinearLayoutManager(this)
         binding.searchTag.adapter = adapter

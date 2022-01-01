@@ -42,7 +42,7 @@ class ProductMainFragment : Fragment(), ProductMainNavigator{
         val binding : FragmentProductMainBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_product_main, container,false)
 
-        adapter = ProductListAdapter(activity, products)
+        adapter = ProductListAdapter(activity, products,viewModel)
 
         binding.viewModel = viewModel
 

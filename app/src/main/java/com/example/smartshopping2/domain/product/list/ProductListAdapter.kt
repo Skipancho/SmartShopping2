@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.smartshopping2.App
@@ -14,7 +15,8 @@ import com.example.smartshopping2.databinding.ProductItemBinding
 
 class ProductListAdapter(
     private val context: Context?,
-    private val products : List<ProductModel>
+    private val products : List<ProductModel>,
+    private val listener : OnItemClickListenr
     ) :
 RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
 
@@ -34,9 +36,6 @@ RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
 
     override fun getItemCount() = products.size
 
-    class ProductListViewHolder(val binding : ViewDataBinding) :
-            RecyclerView.ViewHolder(binding.root)
-
     override fun onBindViewHolder(holder: ProductListViewHolder, position: Int) {
         val product = products[position]
 
@@ -46,5 +45,23 @@ RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
             .load("${App.API_HOST}${product.imagePaths.firstOrNull()}")
             .centerCrop()
             .into(binding.image)
+
+        binding.apply {
+            root.setOnClickListener {
+                listener.onItemClick(product.id)
+            }
+        }
     }
+
+
+
+    class ProductListViewHolder(
+        val binding : ViewDataBinding
+    ) : RecyclerView.ViewHolder(binding.root)
+
+    interface OnItemClickListenr{
+        fun onItemClick(productId : Long?)
+    }
+
+
 }

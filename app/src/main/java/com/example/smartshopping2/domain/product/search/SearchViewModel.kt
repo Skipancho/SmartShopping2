@@ -3,14 +3,10 @@ package com.example.smartshopping2.domain.product.search
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.smartshopping2.App
 import com.example.smartshopping2.api.SmartShoppingApi
-import com.example.smartshopping2.common.clearTasksAndStartActivity
-import com.example.smartshopping2.domain.main.MainActivity
-import com.example.smartshopping2.domain.product.ProductMainNavigator
 import com.example.smartshopping2.domain.product.ProductStatus
+import com.example.smartshopping2.domain.product.list.ProductListAdapter
 import com.example.smartshopping2.domain.product.list.ProductModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +15,7 @@ import splitties.toast.toast
 import java.lang.ref.WeakReference
 import java.text.NumberFormat
 
-class SearchViewModel(app : Application) : AndroidViewModel(app) {
+class SearchViewModel(app : Application) : AndroidViewModel(app) , ProductListAdapter.OnItemClickListenr {
 
     var navigatorRef : WeakReference<SearchNavigator>? = null
     private val navigator get() = navigatorRef?.get()
@@ -58,12 +54,12 @@ class SearchViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
-    fun test(){
-        toast("test")
-    }
-
     fun finish(){
         navigator?.finishActivity()
         //clearTasksAndStartActivity<MainActivity>()
+    }
+
+    override fun onItemClick(productId: Long?) {
+        toast("test : $productId")
     }
 }
