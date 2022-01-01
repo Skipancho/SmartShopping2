@@ -1,6 +1,7 @@
 package com.example.smartshopping2.domain.product.search
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -8,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartshopping2.R
 import com.example.smartshopping2.databinding.ActivitySearchBinding
+import com.example.smartshopping2.domain.product.detail.ProductDetailActivity
 import com.example.smartshopping2.domain.product.list.ProductListAdapter
+import splitties.activities.start
 import java.lang.ref.WeakReference
 
 class SearchActivity : AppCompatActivity() , SearchNavigator{
@@ -52,5 +55,12 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
     @SuppressLint("NotifyDataSetChanged")
     override fun listUpdate() {
         adapter.notifyDataSetChanged()
+    }
+
+    override fun startProductDetailActivity(productId: Long?) {
+        start<ProductDetailActivity>{
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(ProductDetailActivity.PRODUCT_ID, productId)
+        }
     }
 }

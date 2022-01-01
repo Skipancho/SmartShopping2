@@ -60,6 +60,6 @@ class SearchViewModel(app : Application) : AndroidViewModel(app) , ProductListAd
     }
 
     override fun onItemClick(productId: Long?) {
-        toast("test : $productId")
+        navigator?.startProductDetailActivity(productId)
     }
 }

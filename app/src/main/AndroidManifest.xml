@@ -14,9 +14,12 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".domain.product.detail.ProductDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".domain.product.search.SearchActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".domain.mypage.MyPageActivity"
             android:exported="false" />
