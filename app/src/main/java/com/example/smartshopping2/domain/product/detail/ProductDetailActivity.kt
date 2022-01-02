@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.smartshopping2.R
 import com.example.smartshopping2.databinding.ActivityProductDetailBinding
 import com.google.android.material.tabs.TabLayout
+import java.lang.ref.WeakReference
 
-class ProductDetailActivity : AppCompatActivity() {
+class ProductDetailActivity : AppCompatActivity(), ProductDetailNavigator{
 
     private val viewModel by lazy {
         ViewModelProvider(this)
-            .get(ProductDetailViewModel::class.java)
+            .get(ProductDetailViewModel::class.java).also {
+                it.navigatorRef = WeakReference(this)
+            }
     }
 
     private val binding by lazy {
@@ -55,6 +58,11 @@ class ProductDetailActivity : AppCompatActivity() {
             }
             )
         }
+    }
+
+    override fun finishActivity() {
+        finish()
+        overridePendingTransition(R.anim.anim_none_move,R.anim.anim_right_out)
     }
 
     companion object{

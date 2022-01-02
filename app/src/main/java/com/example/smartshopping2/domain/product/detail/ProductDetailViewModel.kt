@@ -8,14 +8,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.smartshopping2.api.SmartShoppingApi
 import com.example.smartshopping2.api.response.ApiResponse
 import com.example.smartshopping2.api.response.ProductResponse
+import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.domain.product.ProductStatus
 import kotlinx.coroutines.launch
 import splitties.toast.toast
+import java.lang.ref.WeakReference
 import java.text.NumberFormat
 
 class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
 
+    var navigatorRef : WeakReference<ProductDetailNavigator>? = null
+    private val navigator get() = navigatorRef?.get()
+
     var productId : Long? = null
+    var product : ProductResponse? = null
 
     val productName = MutableLiveData("-")
     val description = MutableLiveData("")
@@ -51,11 +57,26 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
             NumberFormat.getInstance().format(product.price)
         val soldOutString =
             if(ProductStatus.SOLD_OUT == product.status) "(품절)" else ""
-
+        this.product = product
         productId = product.id
         productName.value = product.name
         description.value = product.description
         price.value = "₩${commaSeparatePrice} $soldOutString"
         imageUrls.value?.addAll(product.imagePaths)
+    }
+
+    fun addProduct_toCartList(){
+        toast(product.toString())
+        val cartList = Prefs.cartList
+        product?.let {
+            cartList.add(it)
+            Prefs.cartList = cartList
+        }
+        navigator?.finishActivity()
+    }
+
+    fun test(){
+        toast(product?.name ?: "상품 없음")
+        println(product.toString())
     }
 }
