@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.smartshopping2.R
 import com.example.smartshopping2.databinding.ActivityProductDetailBinding
+import com.google.android.material.tabs.TabLayout
 
 class ProductDetailActivity : AppCompatActivity() {
 
@@ -30,6 +31,30 @@ class ProductDetailActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        initTab()
+    }
+
+    private fun initTab() {
+        binding.tabLayout.also {
+            it.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    val position = tab?.position
+                    when(position){
+                        0 -> viewModel.isDescription.value = true
+                        else -> viewModel.isDescription.value = false
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                }
+            }
+            )
+        }
     }
 
     companion object{

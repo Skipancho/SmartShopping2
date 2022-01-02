@@ -22,6 +22,8 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
     val price = MutableLiveData("-")
     val imageUrls : MutableLiveData<MutableList<String>> = MutableLiveData(mutableListOf())
 
+    val isDescription = MutableLiveData(true)
+
     fun loadDetail(id : Long) = viewModelScope.launch {
         try {
             val response = getProduct(id)

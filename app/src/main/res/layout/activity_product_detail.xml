@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.smartshopping2.domain.product.detail.ProductDetailViewModel" />
@@ -14,18 +15,65 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".domain.product.detail.ProductDetailActivity">
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{viewModel.productName}"/>
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@{viewModel.productName , default = product_name}"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{viewModel.price}"/>
+        android:textAlignment="center"
+        android:text="@{viewModel.price, default = price}"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabSelectedTextColor="@color/background"
+        app:tabIndicatorColor="@color/background"
+        >
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="상품 설명"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="상품 리뷰"/>
+    </com.google.android.material.tabs.TabLayout>
+    <TextView
+        android:id="@+id/description_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/empty_shape_line"
+        android:text="@{viewModel.description,default = description}"
+        android:visibility="@{viewModel.isDescription() ? View.VISIBLE : View.GONE}"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{viewModel.description}"/>
-
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:text="review"
+        android:visibility="@{viewModel.isDescription() ? View.GONE : View.VISIBLE}"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="장바구니 추가"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="체크리스트 추가"/>
 </LinearLayout>
 </layout>
