@@ -19,6 +19,6 @@ class ProductMainViewModel(app:Application)
     }
 
     override fun onItemClick(productId: Long?) {
-        toast("pmvm : $productId")
+        navigator?.startProductDetail(productId)
     }
 }

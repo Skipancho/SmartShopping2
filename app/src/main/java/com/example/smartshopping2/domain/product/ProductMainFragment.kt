@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.smartshopping2.R
 import com.example.smartshopping2.api.SmartShoppingApi
 import com.example.smartshopping2.databinding.FragmentProductMainBinding
+import com.example.smartshopping2.domain.product.detail.ProductDetailActivity
 import com.example.smartshopping2.domain.product.list.ProductListAdapter
 import com.example.smartshopping2.domain.product.list.ProductModel
 import com.example.smartshopping2.domain.product.search.SearchActivity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.NonCancellable.start
+import splitties.activities.start
 import java.lang.ref.WeakReference
 import java.text.NumberFormat
 
@@ -56,6 +58,7 @@ class ProductMainFragment : Fragment(), ProductMainNavigator{
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadProduct() = GlobalScope.launch {
+        products.clear()
         val response =
             SmartShoppingApi.instance.getProducts(Long.MAX_VALUE,null,"next",null)
 
@@ -90,4 +93,10 @@ class ProductMainFragment : Fragment(), ProductMainNavigator{
         startActivity(intent)
     }
 
+    override fun startProductDetail(productId: Long?) {
+        activity?.start<ProductDetailActivity> {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(ProductDetailActivity.PRODUCT_ID, productId)
+        }
+    }
 }
