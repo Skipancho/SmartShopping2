@@ -50,6 +50,7 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
 
     override fun finishActivity() {
         finish()
+        overridePendingTransition(R.anim.anim_none_move,R.anim.anim_right_out)
     }
 
     @SuppressLint("NotifyDataSetChanged")
