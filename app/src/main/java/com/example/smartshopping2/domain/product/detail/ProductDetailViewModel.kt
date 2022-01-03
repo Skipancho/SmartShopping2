@@ -66,11 +66,19 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
     }
 
     fun addProduct_toCartList(){
-        toast(product.toString())
         val cartList = Prefs.cartList
         product?.let {
             cartList.add(it)
             Prefs.cartList = cartList
+        }
+        navigator?.finishActivity()
+    }
+
+    fun addProduct_toCheckList(){
+        val checkList = Prefs.checkList
+        product?.let {
+            checkList.add(it)
+            Prefs.checkList = checkList
         }
         navigator?.finishActivity()
     }

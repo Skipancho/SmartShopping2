@@ -76,6 +76,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="체크리스트 추가"
-        android:onClick="@{(v) -> viewModel.test()}"/>
+        android:onClick="@{(v) -> viewModel.addProduct_toCheckList()}"/>
 </LinearLayout>
 </layout>

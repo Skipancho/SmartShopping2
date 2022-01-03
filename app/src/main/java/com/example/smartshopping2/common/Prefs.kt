@@ -19,6 +19,7 @@ object Prefs {
     private const val USER_PW = "user_pw"
 
     private const val CART_LIST = "cart_list"
+    private const val CHECK_LIST = "check_list"
 
     val prefs by lazy {
         PreferenceManager.getDefaultSharedPreferences(App.instance)
@@ -81,6 +82,41 @@ object Prefs {
                 prefs.edit().putString(CART_LIST,jsonArray.toString()).apply()
             else
                 prefs.edit().putString(CART_LIST,null).apply()
+        }
+
+    var checkList : ArrayList<ProductResponse>
+        get() {
+            val json = prefs.getString(CHECK_LIST, null)
+            val gson = GsonBuilder().create()
+            val list = ArrayList<ProductResponse>()
+
+            try {
+                json?.let {
+                    val jsonArray = JSONArray(it)
+                    for(i in 0 until jsonArray.length()){
+                        val product = gson.fromJson(
+                            jsonArray.get(i).toString(),
+                            ProductResponse::class.java)
+                        list.add(product)
+                    }
+                }
+            }catch (e : Exception){
+                Log.e("Prefs","checkList get() error")
+            }
+
+            return list
+        }
+        set(value : ArrayList<ProductResponse>) {
+            val gson = GsonBuilder().create()
+            val jsonArray = JSONArray()
+            for (product in value){
+                val json = gson.toJson(product, ProductResponse::class.java)
+                jsonArray.put(json)
+            }
+            if (value.isNotEmpty())
+                prefs.edit().putString(CHECK_LIST,jsonArray.toString()).apply()
+            else
+                prefs.edit().putString(CHECK_LIST,null).apply()
         }
 
 }
