@@ -48,7 +48,7 @@ object Prefs {
         get() = prefs.getString(USER_PW, null)
         set(value) = prefs.edit().putString(USER_PW,value).apply()
 
-    var cartList: List<ProductResponse>
+    var cartList: ArrayList<ProductResponse>
         get() {
             val json = prefs.getString(CART_LIST, null)
             val gson = GsonBuilder().create()
@@ -70,14 +70,17 @@ object Prefs {
 
             return list
         }
-        set(value) {
+        set(value : ArrayList<ProductResponse>) {
             val gson = GsonBuilder().create()
             val jsonArray = JSONArray()
             for (product in value){
                 val json = gson.toJson(product, ProductResponse::class.java)
                 jsonArray.put(json)
             }
-            prefs.edit().putString(CART_LIST,jsonArray.toString()).apply()
+            if (value.isNotEmpty())
+                prefs.edit().putString(CART_LIST,jsonArray.toString()).apply()
+            else
+                prefs.edit().putString(CART_LIST,null).apply()
         }
 
 }

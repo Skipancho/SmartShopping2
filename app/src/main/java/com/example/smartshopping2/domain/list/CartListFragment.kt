@@ -5,56 +5,46 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartshopping2.R
+import com.example.smartshopping2.api.response.ProductResponse
+import com.example.smartshopping2.common.Prefs
+import com.example.smartshopping2.databinding.FragmentCartListBinding
+import com.example.smartshopping2.domain.product.list.CartListAdapter
+import java.lang.ref.WeakReference
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class CartListFragment : Fragment() , ListFragNavigator{
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CartListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CartListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(CartListViewModel::class.java)
+            .also {
+                it.navigatorRef = WeakReference(this)
+            }
     }
+
+    private lateinit var binding : FragmentCartListBinding
+    private lateinit var adapter : CartListAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart_list, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_cart_list,container,false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        adapter = CartListAdapter(viewModel.cart_list,activity,viewModel)
+        binding.cartRv.adapter = adapter
+        binding.cartRv.layoutManager = LinearLayoutManager(context)
+
+        viewModel.price_cal()
+
+        return binding.root
     }
 }

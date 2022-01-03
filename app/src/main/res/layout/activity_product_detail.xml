@@ -70,10 +70,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="장바구니 추가"/>
+        android:text="장바구니 추가"
+        android:onClick="@{(v) -> viewModel.addProduct_toCartList()}"/>
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="체크리스트 추가"/>
+        android:text="체크리스트 추가"
+        android:onClick="@{(v) -> viewModel.test()}"/>
 </LinearLayout>
 </layout>
