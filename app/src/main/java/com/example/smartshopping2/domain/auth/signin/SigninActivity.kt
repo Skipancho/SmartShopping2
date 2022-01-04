@@ -34,12 +34,6 @@ class SigninActivity : AppCompatActivity(),SigninNavigator{
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        /*val userId = Prefs.userId
-        val password = Prefs.password
-
-        if (userId != null && password != null){
-            viewModel.auto_signin(userId, password)
-        }*/
         if (Prefs.token != null){
             startMainActivity()
         }

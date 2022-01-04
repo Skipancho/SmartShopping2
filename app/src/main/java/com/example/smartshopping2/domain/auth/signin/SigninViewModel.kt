@@ -41,20 +41,6 @@ class SigninViewModel(app : Application) : AndroidViewModel(app) {
         }
     }
 
-    fun auto_signin(id : String, pw : String)=viewModelScope.launch{
-        val request = SigninRequest(id, pw)
-
-        if (!isNotValidateSignin(request)){
-            try {
-                val response = requestSignin(request)
-                onSigninResponse(response)
-            } catch (e : Exception){
-                Log.e("SigninViewModel","sign-in failure.", e)
-                toast(e.message ?: "알 수 없는 오류가 발생했습니다.")
-            }
-        }
-    }
-
     fun startSignupActivity() = navigator?.startSignUpActivity()
 
     private fun isNotValidateSignin(request: SigninRequest) =
