@@ -1,11 +1,14 @@
 package com.example.smartshopping2.domain.product.detail
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartshopping2.R
 import com.example.smartshopping2.databinding.ActivityProductDetailBinding
+import com.example.smartshopping2.domain.product.review.ReviewAdapter
 import com.google.android.material.tabs.TabLayout
 import java.lang.ref.WeakReference
 
@@ -25,6 +28,8 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailNavigator{
         )
     }
 
+    private lateinit var adapter : ReviewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +40,14 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailNavigator{
         binding.lifecycleOwner = this
 
         initTab()
+        initReviewList()
+    }
+
+    private fun initReviewList(){
+        adapter = ReviewAdapter(viewModel.reviews,this)
+
+        binding.reviewLv.adapter = adapter
+        binding.reviewLv.layoutManager = LinearLayoutManager(this)
     }
 
     private fun initTab() {
@@ -63,6 +76,11 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailNavigator{
     override fun finishActivity() {
         finish()
         overridePendingTransition(R.anim.anim_none_move,R.anim.anim_right_out)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun updateList() {
+        adapter.notifyDataSetChanged()
     }
 
     companion object{

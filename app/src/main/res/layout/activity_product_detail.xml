@@ -60,12 +60,12 @@
         android:background="@drawable/empty_shape_line"
         android:text="@{viewModel.description,default = description}"
         android:visibility="@{viewModel.isDescription() ? View.VISIBLE : View.GONE}"/>
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/review_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_margin="10dp"
-        android:text="review"
         android:visibility="@{viewModel.isDescription() ? View.GONE : View.VISIBLE}"/>
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"

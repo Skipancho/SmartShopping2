@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.smartshopping2.api.SmartShoppingApi
 import com.example.smartshopping2.api.response.ApiResponse
 import com.example.smartshopping2.api.response.ProductResponse
+import com.example.smartshopping2.api.response.ReviewResponse
 import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.domain.product.ProductStatus
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import splitties.toast.toast
 import java.lang.ref.WeakReference
 import java.text.NumberFormat
@@ -29,6 +32,8 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
     val imageUrls : MutableLiveData<MutableList<String>> = MutableLiveData(mutableListOf())
 
     val isDescription = MutableLiveData(true)
+
+    val reviews = mutableListOf<ReviewResponse>()
 
     fun loadDetail(id : Long) = viewModelScope.launch {
         try {
@@ -63,6 +68,8 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
         description.value = product.description
         price.value = "₩${commaSeparatePrice} $soldOutString"
         imageUrls.value?.addAll(product.imagePaths)
+
+        getReviews()
     }
 
     fun addProduct_toCartList(){
@@ -81,6 +88,20 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
             Prefs.checkList = checkList
         }
         navigator?.finishActivity()
+    }
+
+    fun getReviews() = viewModelScope.launch {
+        println("productId : $productId")
+        val response = SmartShoppingApi.instance.getReviews(null,productId)
+        val datas = response.data
+
+        if (datas != null) {
+            reviews.addAll(datas)
+        }
+
+        withContext(Dispatchers.Main){
+            navigator?.updateList()
+        }
     }
 
     fun test(){
