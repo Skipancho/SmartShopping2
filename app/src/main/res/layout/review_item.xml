@@ -11,6 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/empty_shape_line"
         android:padding="10dp">
@@ -33,5 +37,9 @@
             android:layout_marginTop="5dp"
             android:text="@{review.dateText, default = 작성일자}"/>
 
+    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
     </LinearLayout>
 </layout>
