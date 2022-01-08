@@ -14,9 +14,10 @@ import com.example.smartshopping2.api.response.ProductResponse
 import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.databinding.CartItemBinding
 import com.example.smartshopping2.domain.list.CartListViewModel
+import com.example.smartshopping2.domain.list.Cart_item
 
 class CartListAdapter(
-    private val list: ArrayList<ProductResponse>,
+    private val list: ArrayList<Cart_item>,
     private val context : Context?,
     private val priceCalculator: PriceCalculator
 ) : RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(){
@@ -40,11 +41,13 @@ class CartListAdapter(
         binding.item = item
 
         binding.apply {
+            amountTv.text = "${item.amount} 개"
             deleteBtn.setOnClickListener { _ ->
                 list.remove(item)
                 Prefs.cartList = list
                 notifyDataSetChanged()
                 priceCalculator.price_cal()
+                priceCalculator.product_check()
             }
         }
     }

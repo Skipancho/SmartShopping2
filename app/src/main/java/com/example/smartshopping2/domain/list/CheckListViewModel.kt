@@ -19,13 +19,33 @@ class CheckListViewModel(app : Application) : AndroidViewModel(app), PriceCalcul
         var sum = 0
         val list = check_list
         for (item in list){
-            sum += item.price
+            sum += item.price * item.amount
         }
-        println("sum : $sum")
         val commaSeparatedPrice =
             NumberFormat.getNumberInstance().format(sum)
-        println("commaSeparatedPrice : $commaSeparatedPrice")
         updateView("$commaSeparatedPrice 원")
+    }
+
+    override fun product_check() {
+        val checkList = check_list
+        val cartList = Prefs.cartList
+
+        for (check_item in checkList){
+            var cnt = 0
+            for (cart_item in cartList){
+                if (cart_item.productId == check_item.productId){
+                    cnt += 1
+                    cart_item.isChecked = true
+                    check_item.isChecked = true
+                }
+            }
+            if (cnt == 0){
+                check_item.isChecked = false
+            }
+        }
+
+        Prefs.checkList = checkList
+        Prefs.cartList = cartList
     }
 
     private fun updateView(str : String){

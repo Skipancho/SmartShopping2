@@ -3,10 +3,8 @@ package com.example.smartshopping2.common
 import android.util.Log
 import androidx.preference.PreferenceManager
 import com.example.smartshopping2.App
-import com.example.smartshopping2.api.response.ProductResponse
-import com.google.gson.Gson
+import com.example.smartshopping2.domain.list.Cart_item
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
 import org.json.JSONArray
 
 object Prefs {
@@ -45,15 +43,11 @@ object Prefs {
         get() = prefs.getString(USER_ID, null)
         set(value) = prefs.edit().putString(USER_ID,value).apply()
 
-    var password
-        get() = prefs.getString(USER_PW, null)
-        set(value) = prefs.edit().putString(USER_PW,value).apply()
-
-    var cartList: ArrayList<ProductResponse>
+    var cartList: ArrayList<Cart_item>
         get() {
             val json = prefs.getString(CART_LIST, null)
             val gson = GsonBuilder().create()
-            val list = ArrayList<ProductResponse>()
+            val list = ArrayList<Cart_item>()
 
             try {
                 json?.let {
@@ -61,7 +55,7 @@ object Prefs {
                     for(i in 0 until jsonArray.length()){
                         val product = gson.fromJson(
                             jsonArray.get(i).toString(),
-                            ProductResponse::class.java)
+                            Cart_item::class.java)
                         list.add(product)
                     }
                 }
@@ -71,11 +65,11 @@ object Prefs {
 
             return list
         }
-        set(value : ArrayList<ProductResponse>) {
+        set(value : ArrayList<Cart_item>) {
             val gson = GsonBuilder().create()
             val jsonArray = JSONArray()
             for (product in value){
-                val json = gson.toJson(product, ProductResponse::class.java)
+                val json = gson.toJson(product, Cart_item::class.java)
                 jsonArray.put(json)
             }
             if (value.isNotEmpty())
@@ -84,11 +78,11 @@ object Prefs {
                 prefs.edit().putString(CART_LIST,null).apply()
         }
 
-    var checkList : ArrayList<ProductResponse>
+    var checkList : ArrayList<Cart_item>
         get() {
             val json = prefs.getString(CHECK_LIST, null)
             val gson = GsonBuilder().create()
-            val list = ArrayList<ProductResponse>()
+            val list = ArrayList<Cart_item>()
 
             try {
                 json?.let {
@@ -96,7 +90,7 @@ object Prefs {
                     for(i in 0 until jsonArray.length()){
                         val product = gson.fromJson(
                             jsonArray.get(i).toString(),
-                            ProductResponse::class.java)
+                            Cart_item::class.java)
                         list.add(product)
                     }
                 }
@@ -106,11 +100,11 @@ object Prefs {
 
             return list
         }
-        set(value : ArrayList<ProductResponse>) {
+        set(value : ArrayList<Cart_item>) {
             val gson = GsonBuilder().create()
             val jsonArray = JSONArray()
             for (product in value){
-                val json = gson.toJson(product, ProductResponse::class.java)
+                val json = gson.toJson(product, Cart_item::class.java)
                 jsonArray.put(json)
             }
             if (value.isNotEmpty())

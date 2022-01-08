@@ -44,6 +44,7 @@ class CartListFragment : Fragment() , ListFragNavigator{
         binding.cartRv.layoutManager = LinearLayoutManager(context)
 
         viewModel.price_cal()
+        viewModel.product_check()
 
         return binding.root
     }

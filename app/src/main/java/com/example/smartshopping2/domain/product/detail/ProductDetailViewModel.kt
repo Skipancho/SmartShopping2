@@ -10,6 +10,7 @@ import com.example.smartshopping2.api.response.ApiResponse
 import com.example.smartshopping2.api.response.ProductResponse
 import com.example.smartshopping2.api.response.ReviewResponse
 import com.example.smartshopping2.common.Prefs
+import com.example.smartshopping2.domain.list.Cart_item
 import com.example.smartshopping2.domain.product.ProductStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,7 +76,17 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
     fun addProduct_toCartList(){
         val cartList = Prefs.cartList
         product?.let {
-            cartList.add(it)
+            val addItem = Cart_item(it.id,it.name,it.price,1,false)
+            var cnt = 0
+            for ( c in cartList){
+                if (c.productId == addItem.productId){
+                    cnt += 1
+                    c.amount += 1
+                }
+            }
+            if (cnt == 0){
+                cartList.add(addItem)
+            }
             Prefs.cartList = cartList
         }
         navigator?.finishActivity()
@@ -84,7 +95,17 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
     fun addProduct_toCheckList(){
         val checkList = Prefs.checkList
         product?.let {
-            checkList.add(it)
+            val addItem = Cart_item(it.id,it.name,it.price,1,false)
+            var cnt = 0
+            for ( c in checkList){
+                if (c.productId == addItem.productId){
+                    cnt += 1
+                    c.amount += 1
+                }
+            }
+            if (cnt == 0){
+                checkList.add(addItem)
+            }
             Prefs.checkList = checkList
         }
         navigator?.finishActivity()

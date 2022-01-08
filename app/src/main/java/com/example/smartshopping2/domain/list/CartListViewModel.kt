@@ -26,13 +26,33 @@ class CartListViewModel(app : Application) : AndroidViewModel(app), PriceCalcula
         total_price = 0
         val list = cart_list
         for (item in list){
-            total_price += item.price
+            total_price += item.price * item.amount
         }
-        println("sum : $total_price")
         val commaSeparatedPrice =
             NumberFormat.getNumberInstance().format(total_price)
-        println("commaSeparatedPrice : $commaSeparatedPrice")
         updateView("$commaSeparatedPrice 원")
+    }
+
+    override fun product_check() {
+        val checkList = Prefs.checkList
+        val cartList = cart_list
+
+        for (cart_item in cartList){
+            var cnt = 0
+            for (check_item in checkList){
+                if (cart_item.productId == check_item.productId){
+                    cnt += 1
+                    cart_item.isChecked = true
+                    check_item.isChecked = true
+                }
+            }
+            if (cnt == 0){
+                cart_item.isChecked = false
+            }
+        }
+
+        Prefs.checkList = checkList
+        Prefs.cartList = cartList
     }
 
     private fun updateView(str : String){
