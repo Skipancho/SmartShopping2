@@ -44,7 +44,6 @@ class CartListAdapter(
             amountTv.text = "${item.amount} 개"
             deleteBtn.setOnClickListener { _ ->
                 list.remove(item)
-                Prefs.cartList = list
                 notifyDataSetChanged()
                 priceCalculator.price_cal()
                 priceCalculator.product_check()

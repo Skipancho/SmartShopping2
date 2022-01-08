@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartshopping2.R
+import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.databinding.ActivitySearchBinding
 import com.example.smartshopping2.domain.product.detail.ProductDetailActivity
 import com.example.smartshopping2.domain.product.list.ProductListAdapter
@@ -31,6 +33,7 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
     }
 
     private lateinit var adapter : ProductListAdapter
+    private lateinit var tag_adapter : SearchTagAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +45,13 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
     }
 
     private fun initRecyclerView(){
-        adapter = ProductListAdapter(this, viewModel.search_products, viewModel)
+        tag_adapter = SearchTagAdapter(viewModel.search_tags, this, viewModel)
+        binding.searchTagRv.layoutManager = LinearLayoutManager(this)
+        binding.searchTagRv.adapter = tag_adapter
 
-        binding.searchTag.layoutManager = LinearLayoutManager(this)
-        binding.searchTag.adapter = adapter
+        adapter = ProductListAdapter(this, viewModel.search_products, viewModel)
+        binding.searchProductRv.layoutManager = GridLayoutManager(this, 2)
+        binding.searchProductRv.adapter = adapter
     }
 
     override fun finishActivity() {
@@ -56,6 +62,7 @@ class SearchActivity : AppCompatActivity() , SearchNavigator{
     @SuppressLint("NotifyDataSetChanged")
     override fun listUpdate() {
         adapter.notifyDataSetChanged()
+        tag_adapter.notifyDataSetChanged()
     }
 
     override fun startProductDetailActivity(productId: Long?) {

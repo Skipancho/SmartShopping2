@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.smartshopping2.domain.product.search.SearchViewModel" />
@@ -13,56 +14,106 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".domain.product.search.SearchActivity">>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/back_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_baseline_arrow_back_24"
                 android:onClick="@{(v) -> viewModel.finish()}"/>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:hint="상품의 이름을 입력하세요."
                 android:text="@={viewModel.search_text}"
                 tools:ignore="RelativeOverlap" />
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/search_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="search"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_baseline_search_24"
                 android:onClick="@{(v)-> viewModel.searchProduct()}"/>
-        </RelativeLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_tag"
+        </LinearLayout>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="10dp"
-            />
-
-
-        <RelativeLayout
-            android:id="@+id/bottom_bar"
+            android:layout_height="2dp"
+            android:background="@color/background"/>
+        <LinearLayout
+            android:visibility="@{viewModel.isBeforeSearch? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="save"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="image"/>
-        </RelativeLayout>
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="최근 검색어"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전체 삭제"
+                    android:textSize="15dp"
+                    android:onClick="@{(v)->viewModel.search_tag_clear()}"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_tag_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <RelativeLayout
+                android:id="@+id/bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="save"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="image"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isBeforeSearch? View.GONE : View.VISIBLE}"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_product_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:visibility="@{viewModel.isProudctsEmpty? View.GONE : View.VISIBLE}"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="해당하는 상품이 없습니다."
+                android:visibility="@{viewModel.isProudctsEmpty? View.VISIBLE : View.GONE}"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>
