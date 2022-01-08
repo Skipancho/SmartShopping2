@@ -33,7 +33,14 @@
                 android:layout_weight="1"
                 android:hint="상품의 이름을 입력하세요."
                 android:text="@={viewModel.search_text}"
-                tools:ignore="RelativeOverlap" />
+                tools:ignore="RelativeOverlap"
+                app:addTextChangedListener="@{viewModel.onEditTextWatcher()}"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:visibility="@{viewModel.isTextBlank? View.GONE : View.VISIBLE}"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:onClick="@{(v) -> viewModel.searchText_clear()}"
+                android:background="@drawable/ic_round_clear_circle_24"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/search_btn"
                 android:layout_width="50dp"
@@ -72,19 +79,31 @@
                     android:layout_alignParentEnd="true"/>
             </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="@{viewModel.isSearchTagsEmpty? View.GONE : View.VISIBLE}"
                 android:id="@+id/search_tag_rv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
+            <TextView
+                android:visibility="@{viewModel.isSearchTagsEmpty? View.VISIBLE: View.GONE }"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="최근 검색어가 없습니다."
+                android:gravity="center"/>
             <RelativeLayout
                 android:id="@+id/bottom_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <Button
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="save"/>
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:textSize="15dp"
+                    android:onClick="@{(v) -> viewModel.change_save_mode()}"
+                    android:text="@{viewModel.mode_text}" />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

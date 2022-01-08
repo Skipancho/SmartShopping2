@@ -12,13 +12,13 @@ object Prefs {
     private const val REFRESH_TOKEN = "refresh_token"
     private const val USER_NICKNAME = "user_nickname"
     private const val USER_CODE = "user_code"
-
     private const val USER_ID = "user_id"
 
     private const val CART_LIST = "cart_list"
     private const val CHECK_LIST = "check_list"
 
     private const val SEARCH_LIST = "search_list"
+    private const val SAVE_MODE = "save_mode"
 
     val prefs by lazy {
         PreferenceManager.getDefaultSharedPreferences(App.instance)
@@ -43,6 +43,10 @@ object Prefs {
     var userId
         get() = prefs.getString(USER_ID, null)
         set(value) = prefs.edit().putString(USER_ID,value).apply()
+
+    var saveMode
+        get() = prefs.getBoolean(SAVE_MODE, true)
+        set(value) = prefs.edit().putBoolean(SAVE_MODE,value).apply()
 
     var cartList: ArrayList<Cart_item>
         get() {

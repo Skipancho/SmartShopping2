@@ -7,14 +7,15 @@
         <entry key="app/src/main/res/drawable/empty_shape_line.xml" value="0.28584474885844746" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.28584474885844746" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.28584474885844746" />
+        <entry key="app/src/main/res/drawable/ic_round_clear_circle_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/item_color.xml" value="0.14814814814814814" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_my_page.xml" value="0.21264367816091953" />
         <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.1925925925925926" />
         <entry key="app/src/main/res/layout/activity_signin.xml" value="0.2710926694329184" />
-        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.24561403508771928" />
         <entry key="app/src/main/res/layout/cart_item.xml" value="0.1348314606741573" />
         <entry key="app/src/main/res/layout/fragment_cart_list.xml" value="0.15517241379310345" />
         <entry key="app/src/main/res/layout/fragment_check_list.xml" value="0.165" />

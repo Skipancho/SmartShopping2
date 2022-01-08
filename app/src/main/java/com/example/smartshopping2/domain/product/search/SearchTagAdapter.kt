@@ -43,6 +43,7 @@ class SearchTagAdapter(
             }
             deleteBtn.setOnClickListener { _ ->
                 list.remove(item)
+                searchViewModel.isSearchTagsEmpty.value = list.isNullOrEmpty()
                 notifyDataSetChanged()
             }
         }
