@@ -25,8 +25,6 @@ class SigninViewModel(app : Application) : AndroidViewModel(app) {
     val userId = MutableLiveData("")
     val password = MutableLiveData("")
 
-    val auto_signin = MutableLiveData(false)
-
     fun signin() = viewModelScope.launch{
         val request = SigninRequest(userId.value, password.value)
 
@@ -70,11 +68,6 @@ class SigninViewModel(app : Application) : AndroidViewModel(app) {
                 data.nickName,
                 data.userCode
             )
-
-            if (auto_signin.value == true){
-                Prefs.userId = userId.value
-                Prefs.password = password.value
-            }
 
             toast("로그인 성공")
             navigator?.startMainActivity()

@@ -24,7 +24,6 @@ object Auth {
         Prefs.nickName = null
         Prefs.userCode = 0
         Prefs.userId = null
-        Prefs.password = null
     }
 
     fun refreshToken(token: String){
