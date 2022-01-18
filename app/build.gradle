@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.smartshopping2"
-        minSdk 21
+        minSdk 24
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    aaptOptions{
+        noCompress "tflite"
     }
 }
 
@@ -82,4 +85,9 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+    //tflite
+    implementation('org.tensorflow:tensorflow-lite:0.0.0-nightly') { changing = true }
+    implementation('org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly') { changing = true }
+    implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
 }
