@@ -1,6 +1,7 @@
 package com.example.smartshopping2.domain.product.list
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,6 +13,7 @@ import com.example.smartshopping2.App
 import com.example.smartshopping2.R
 import com.example.smartshopping2.api.response.ProductResponse
 import com.example.smartshopping2.databinding.ProductItemBinding
+import com.example.smartshopping2.domain.product.ImageLoader
 
 class ProductListAdapter(
     private val context: Context?,
@@ -40,11 +42,20 @@ RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
         val product = products[position]
 
         val binding = holder.binding as ProductItemBinding
+
         binding.product = product
-        Glide.with(binding.image)
-            .load("${App.API_HOST}${product.imagePaths.firstOrNull()}")
+
+        if (product.imagePaths.isNotEmpty()){
+            ImageLoader.loadImage(product.imagePaths.first()) { bitmap ->
+                binding.image.setImageBitmap(
+                    bitmap
+                )
+            }
+        }
+        /*Glide.with(binding.image)
+            .load(product.imagePaths.firstOrNull())
             .centerCrop()
-            .into(binding.image)
+            .into(binding.image)*/
 
         binding.apply {
             root.setOnClickListener {
@@ -52,8 +63,6 @@ RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>(){
             }
         }
     }
-
-
 
     class ProductListViewHolder(
         val binding : ViewDataBinding
