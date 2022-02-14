@@ -16,4 +16,8 @@
         android:id="@+id/frag_check_list"
         android:name="com.example.smartshopping2.domain.list.CheckListFragment"
         tools:layout="@layout/fragment_check_list"/>
+    <fragment
+        android:id="@+id/frag_classifier"
+        android:name="com.example.smartshopping2.domain.classify.ClassifyFragment"
+        tools:layout="@layout/fragment_classify"/>
 </navigation>

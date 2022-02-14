@@ -16,7 +16,7 @@
         android:checked="true"
         android:title="장바구니" />
     <item
-        android:id="@+id/tab3"
+        android:id="@+id/frag_classifier"
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_photo_camera_24"
         android:enabled="true"
