@@ -37,7 +37,7 @@ class CartListFragment : Fragment() , ListFragNavigator{
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_cart_list,container,false)
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = CartListAdapter(viewModel.cart_list,activity,viewModel)
         binding.cartRv.adapter = adapter

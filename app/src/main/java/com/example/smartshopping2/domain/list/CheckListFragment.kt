@@ -33,7 +33,7 @@ class CheckListFragment : Fragment(), ListFragNavigator {
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_check_list,container,false)
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = CartListAdapter(viewModel.check_list,activity,viewModel)
         binding.checkRv.adapter = adapter
