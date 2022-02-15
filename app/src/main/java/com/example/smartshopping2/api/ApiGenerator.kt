@@ -14,12 +14,24 @@ class ApiGenerator {
         .build()
         .create(api)
 
+    fun <T> testG(api : Class<T>) : T = Retrofit.Builder()
+        .baseUrl("${App.TEST_HOST}")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(testClient())
+        .build()
+        .create(api)
+
     fun <T> generateRefreshClient(api : Class<T>) : T = Retrofit.Builder()
         .baseUrl("${App.API_HOST}:${App.API_PORT}")
         .addConverterFactory(GsonConverterFactory.create())
         .client(refreshClient())
         .build()
         .create(api)
+
+    private fun testClient() =
+        OkHttpClient.Builder().apply {
+            addInterceptor(httpLoggingInterceptor())
+        }.build()
 
     private fun httpClient() =
         OkHttpClient.Builder().apply {
