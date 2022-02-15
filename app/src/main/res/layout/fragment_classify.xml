@@ -24,7 +24,7 @@
             android:id="@+id/product_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="해당 상품 없음"
+            android:text="@{viewModel.productName}"
             android:layout_marginBottom="30dp"
             android:layout_gravity="center"/>
         <androidx.appcompat.widget.AppCompatButton
@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:background="@drawable/empty_shape_line"
-            android:text="상품 조회"/>
+            android:text="상품 조회"
+            android:onClick="@{(v)->viewModel.productInquiry()}"/>
     </LinearLayout>
 </layout>
