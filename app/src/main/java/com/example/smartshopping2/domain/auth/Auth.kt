@@ -13,9 +13,6 @@ object Auth {
         Prefs.refreshToken = refreshToken
         Prefs.nickName = nickName
         Prefs.userCode = userCode
-
-        println("token : $token")
-        println("refresh : $refreshToken")
     }
 
     fun signout(){

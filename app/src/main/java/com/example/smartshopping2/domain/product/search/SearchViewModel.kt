@@ -3,10 +3,13 @@ package com.example.smartshopping2.domain.product.search
 import android.app.Application
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.smartshopping2.api.SmartShoppingApi
+import com.example.smartshopping2.api.response.ApiResponse
+import com.example.smartshopping2.api.response.ProductResponse
 import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.domain.product.ProductStatus
 import com.example.smartshopping2.domain.product.list.ProductListAdapter
@@ -54,8 +57,8 @@ class SearchViewModel(app : Application) : AndroidViewModel(app) , ProductListAd
 
         search_products.clear()
 
-        val response =
-        SmartShoppingApi.instance.getProducts(Long.MAX_VALUE,null,"next",searchText)
+        val response = getProducts(searchText)
+
         val datas = response.data
 
         if (!datas.isNullOrEmpty()) {
@@ -87,6 +90,15 @@ class SearchViewModel(app : Application) : AndroidViewModel(app) , ProductListAd
             isBeforeSearch.value = false
             navigator?.listUpdate()
         }
+    }
+
+    private suspend fun getProducts(searchText : String?) = try {
+        SmartShoppingApi.instance.getProducts(Long.MAX_VALUE,null,"next",searchText)
+    }catch (e : Exception){
+        Log.e("ProductDetailViewModel","상품 정보를 가져오는 중 오류 발생")
+        ApiResponse.error<List<ProductResponse>>(
+            "상품 정보를 가져오는 중 오류가 발생했습니다."
+        )
     }
 
     fun searchText_clear(){
