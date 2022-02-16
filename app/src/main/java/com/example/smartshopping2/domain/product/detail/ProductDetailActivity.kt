@@ -29,18 +29,26 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailNavigator{
     }
 
     private lateinit var adapter : ReviewAdapter
+    private lateinit var imageSliderAdapter : ImageSliderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val productId = intent.getLongExtra(PRODUCT_ID,-1)
-        viewModel.loadDetail(productId)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         initTab()
         initReviewList()
+        initViewPager()
+
+        viewModel.loadDetail(productId)
+    }
+
+    private fun initViewPager(){
+        imageSliderAdapter = ImageSliderAdapter(this)
+        binding.viewPager.adapter = imageSliderAdapter
     }
 
     private fun initReviewList(){
@@ -83,6 +91,9 @@ class ProductDetailActivity : AppCompatActivity(), ProductDetailNavigator{
         adapter.notifyDataSetChanged()
     }
 
+    override fun updateDetailImage() {
+        imageSliderAdapter.updateItems(viewModel.imageUrls)
+    }
     companion object{
         val PRODUCT_ID = "product_id"
     }

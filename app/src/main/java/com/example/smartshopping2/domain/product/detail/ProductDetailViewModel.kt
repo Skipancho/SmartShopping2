@@ -30,7 +30,7 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
     val productName = MutableLiveData("-")
     val description = MutableLiveData("")
     val price = MutableLiveData("-")
-    val imageUrls : MutableLiveData<MutableList<String>> = MutableLiveData(mutableListOf())
+    val imageUrls : MutableList<String> = mutableListOf()
 
     val isDescription = MutableLiveData(true)
 
@@ -68,8 +68,9 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
         productName.value = product.name
         description.value = product.description
         price.value = "₩${commaSeparatePrice} $soldOutString"
-        imageUrls.value?.addAll(product.imagePaths)
+        imageUrls.addAll(product.imagePaths)
 
+        navigator?.updateDetailImage()
         getReviews()
     }
 
