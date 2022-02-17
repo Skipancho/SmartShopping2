@@ -6,9 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.smartshopping2.api.SmartShoppingApi
-import com.example.smartshopping2.api.response.ApiResponse
-import com.example.smartshopping2.api.response.ProductResponse
-import com.example.smartshopping2.api.response.ReviewResponse
+import com.example.smartshopping2.api.TestApi
+import com.example.smartshopping2.api.response.*
 import com.example.smartshopping2.common.Prefs
 import com.example.smartshopping2.domain.list.Cart_item
 import com.example.smartshopping2.domain.product.ProductStatus
@@ -38,12 +37,20 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
 
     fun loadDetail(id : Long) = viewModelScope.launch {
         try {
-            val response = getProduct(id)
+            /*val response = getProduct(id)
+
             if (response.success && response.data != null){
                 updateViewData(response.data)
             }else{
                 toast(response.message ?: "알 수 없는 오류가 발생했습니다.")
+            }*/
+            val response = TestApi.instance.getProducts("pCode",id.toString())
+            val data = response.response?.firstOrNull()
+
+            if (data != null){
+                testViewUpdate(data)
             }
+
         }catch (e : Exception){
             toast(e.message ?: "알 수 없는 오류가 발생했습니다.")
         }
@@ -56,6 +63,22 @@ class ProductDetailViewModel(app : Application) : AndroidViewModel(app) {
         ApiResponse.error<ProductResponse>(
             "상품 정보를 가져오는 중 오류가 발생했습니다."
         )
+    }
+
+    private fun testViewUpdate(testProduct : testResponse){
+        val commaSeparatePrice =
+            NumberFormat.getInstance().format(testProduct.price)
+        val soldOutString =
+            if(testProduct.amount == 0) "(품절)" else ""
+        this.product = ProductResponse(testProduct.pCode.toLong(),testProduct.pName,testProduct.info,testProduct.price,"",0,
+            listOf())
+        productId = testProduct.pCode.toLong()
+        productName.value = testProduct.pName
+        description.value = testProduct.info
+        price.value = "₩${commaSeparatePrice} $soldOutString"
+        imageUrls.add("https://ctg1770.cafe24.com/SC/image/$productId.jpg")
+
+        navigator?.updateDetailImage()
     }
 
     private fun updateViewData(product : ProductResponse){

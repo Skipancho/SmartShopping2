@@ -36,11 +36,11 @@
             android:background="@drawable/empty_shape_line"
             android:text="사진 촬영"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/product_inquiry_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:background="@drawable/empty_shape_line"
-            android:text="상품 조회"
-            android:onClick="@{(v)->viewModel.productInquiry()}"/>
+            android:text="상품 조회"/>
     </LinearLayout>
 </layout>

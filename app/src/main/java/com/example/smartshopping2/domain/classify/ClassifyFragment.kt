@@ -21,6 +21,7 @@ import com.example.smartshopping2.databinding.FragmentCheckListBinding
 import com.example.smartshopping2.databinding.FragmentClassifyBinding
 import com.example.smartshopping2.domain.list.CheckListViewModel
 import com.example.smartshopping2.domain.product.ImageLoader
+import com.example.smartshopping2.domain.product.detail.ProductDetailActivity
 import splitties.activities.start
 import splitties.resources.int
 import java.lang.ref.WeakReference
@@ -34,8 +35,6 @@ class ClassifyFragment : Fragment() {
 
     private lateinit var binding : FragmentClassifyBinding
 
-    //private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +45,10 @@ class ClassifyFragment : Fragment() {
         binding.cameraBtn.setOnClickListener { _ ->
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             activity?.startActivityFromFragment(this,intent,101)
+        }
+        binding.productInquiryBtn.setOnClickListener { _->
+            if(viewModel.productId != 0L)
+                startProductDetail(viewModel.productId)
         }
 
         viewModel.initClassifier(activity,"model.tflite","labels.txt")
@@ -59,6 +62,13 @@ class ClassifyFragment : Fragment() {
             val bitmap = data.extras?.get("data") as Bitmap
             binding.image.setImageBitmap(bitmap)
             viewModel.getResult(bitmap)
+        }
+    }
+
+    fun startProductDetail(productId: Long?) {
+        activity?.start<ProductDetailActivity> {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(ProductDetailActivity.PRODUCT_ID, productId)
         }
     }
 

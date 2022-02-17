@@ -20,6 +20,7 @@ class ClassifyViewModel(app : Application) : AndroidViewModel(app) {
     lateinit var classifier : Classifier
     val productName = MutableLiveData("해당 상품 없음")
     var isValidateProduct = false
+    var productId = 0L
 
     fun initClassifier(
         activity : Activity?,
@@ -58,6 +59,7 @@ class ClassifyViewModel(app : Application) : AndroidViewModel(app) {
                 isValidateProduct = false
             }else{
                 productName.value = data.pName
+                productId = data.pCode.toLong()
                 isValidateProduct = true
             }
         }
